@@ -1,0 +1,3 @@
+[submodule "st"]
+	path = st
+	url = https://github.com/serge-name/suckless.st.git
