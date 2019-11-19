@@ -3,15 +3,17 @@ ST_DIR = $(CURDIR)/st
 export QUILT_PATCHES = $(CURDIR)/patches
 QUILT_FLAG = $(ST_DIR)/.quilt_applied
 
-all: quilt_push
-	$(MAKE) -C $(ST_DIR) $@
+all: $(ST_DIR)/st
+
+install: $(ST_DIR)/st
+	@install -v -p -m 750 -t $(HOME)/bin $<
 
 clean: quilt_pop
 	@rm -f $(ST_DIR)/config.h
-	$(MAKE) -C $(ST_DIR) $@
+	@$(MAKE) -C $(ST_DIR) $@
 
-install: all
-	@cp -v $(ST_DIR)/st $(HOME)/bin/st
+$(ST_DIR)/st: quilt_push
+	@$(MAKE) -C $(ST_DIR) all
 
 quilt_push: $(ST_DIR)
 	@( cd $(ST_DIR) && test ! -f $(QUILT_FLAG) \
@@ -22,7 +24,7 @@ quilt_pop: $(ST_DIR)
 	  && quilt pop && rm -f $(QUILT_FLAG) || true )
 
 $(ST_DIR):
-	git submodule init
-	git submodule update
+	@git submodule init
+	@git submodule update
 
-.PHONY: all quilt_push quilt_pop
+.PHONY: quilt_push quilt_pop
