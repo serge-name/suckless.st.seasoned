@@ -22,6 +22,7 @@ quilt_pop: $(ST_DIR)
 	  && quilt pop && rm -f $(QUILT_FLAG) || true )
 
 $(ST_DIR):
+	git submodule init
 	git submodule update
 
 .PHONY: all quilt_push quilt_pop
