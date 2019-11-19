@@ -17,7 +17,7 @@ $(ST_DIR)/st: quilt_push
 
 quilt_push: $(ST_DIR)
 	@( cd $(ST_DIR) && test ! -f $(QUILT_FLAG) \
-	  && quilt push -a && touch $(QUILT_FLAG) || true )
+	  && quilt push -a --leave-rejects && touch $(QUILT_FLAG) || true )
 
 quilt_pop: $(ST_DIR)
 	@( cd $(ST_DIR) && test -f $(QUILT_FLAG) \
