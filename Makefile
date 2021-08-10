@@ -3,7 +3,7 @@ ST_DIR = $(CURDIR)/st
 export QUILT_PATCHES = $(CURDIR)/patches
 QUILT_FLAG = $(ST_DIR)/.quilt_applied
 
-all: $(ST_DIR)/st
+all: $(ST_DIR)/.git $(ST_DIR)/st
 
 install: $(ST_DIR)/st
 	@install -v -p -m 750 -t $(HOME)/bin $<
@@ -23,7 +23,7 @@ quilt_pop: $(ST_DIR)
 	@( cd $(ST_DIR) && test -f $(QUILT_FLAG) \
 	  && quilt pop -a && rm -f $(QUILT_FLAG) || true )
 
-$(ST_DIR):
+$(ST_DIR)/.git:
 	@git submodule init
 	@git submodule update
 
